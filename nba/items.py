@@ -8,7 +8,7 @@
 from scrapy import Item, Field
 
 
-class NBA_Item(scrapy.Item):
+class NBA_Item(Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     Rank = Field()
@@ -19,4 +19,3 @@ class NBA_Item(scrapy.Item):
     Home = Field()
     Away = Field()
     Year_2014 = Field()
-
