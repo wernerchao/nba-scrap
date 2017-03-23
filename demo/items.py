@@ -13,10 +13,10 @@ class DemoItem(scrapy.Item):
     # name = scrapy.Field()
     Rank = Field()
     Team = Field()
-    2015 = Field()
-    Last 3 = Field()
-    Last 1 = Field()
+    Year_2015 = Field()
+    Last_3 = Field()
+    Last_1 = Field()
     Home = Field()
     Away = Field()
-    2014 = Field()
-        
+    Year_2014 = Field()
+

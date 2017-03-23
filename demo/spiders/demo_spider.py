@@ -12,19 +12,17 @@ class Demo_Spider(Spider):
     start_urls = ['https://www.teamrankings.com/nba/stat/offensive-efficiency?date=2016-06-20' ]
 
     def parse(self, response):
-        rows = response.xpath('//*[@id="DataTables_Table_0"]').extract()
-        # //*[@id="mw-content-text"]/table
+        rows = response.xpath('//*[@id="html"]/body/div[2]/div[1]/div[2]/main/table/tbody/tr').extract()
 
-
-        for i in range(1, 10481, 2):
-            RDate = Selector(text=rows[i]).xpath('//td[2]/a/text()').extract()[0]
-            # //*[@id="DataTables_Table_0"]/tbody/tr[1]/td[1]
-
-            Title = Selector(text=rows[i]).xpath('//td[3]/b/a/text()').extract()[0]
-            PBudget = Selector(text=rows[i]).xpath('//td[4]/text()').extract()[0]
-            DomesticG = Selector(text=rows[i]).xpath('//td[5]/text()').extract()[0]
-            WorldwideG = Selector(text=rows[i]).xpath('//td[6]/text()').extract()[0]
-
+        for row in rows:
+            Rank = Selector(text=row).xpath('//td[1]/text()')[0].extract()
+            Team = Selector(text=rows[i]).xpath('//td[2]/text()')[0].extract()
+            Year_2015 = Selector(text=rows[i]).xpath('//td[3]/text()')[0].extract()
+            Last_3 = Selector(text=rows[i]).xpath('//td[4]/text()')[0].extract()
+            Last_1 = Selector(text=rows[i]).xpath('//td[5]/text()')[0].extract()
+            Home = Selector(text=rows[i]).xpath('//td[6]/text()')[0].extract()
+            Away = Selector(text=rows[i]).xpath('//td[7]/text()')[0].extract()
+            Year_2014 = Selector(text=rows[i]).xpath('//td[8]/text()')[0].extract()
 
             item = BudgetItem()
             item['RDate'] = RDate
@@ -34,4 +32,3 @@ class Demo_Spider(Spider):
             item['WorldwideG'] = WorldwideG
 
             yield item
-
