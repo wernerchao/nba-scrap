@@ -11,8 +11,12 @@ from scrapy import Item, Field
 class DemoItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    film = Field()
-    year = Field()
-    awards = Field()
-    nominations = Field()
-    
+    Rank = Field()
+    Team = Field()
+    2015 = Field()
+    Last 3 = Field()
+    Last 1 = Field()
+    Home = Field()
+    Away = Field()
+    2014 = Field()
+        
