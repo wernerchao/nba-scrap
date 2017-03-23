@@ -24,11 +24,14 @@ class Demo_Spider(Spider):
             Away = Selector(text=rows[i]).xpath('//td[7]/text()')[0].extract()
             Year_2014 = Selector(text=rows[i]).xpath('//td[8]/text()')[0].extract()
 
-            item = BudgetItem()
-            item['RDate'] = RDate
-            item['Title'] = Title
-            item['PBudget'] = PBudget
-            item['DomesticG'] = DomesticG
-            item['WorldwideG'] = WorldwideG
+            item = NBA_Item()
+            item['Rank'] = Rank
+            item['Team'] = Team
+            item['Year_2015'] = Year_2015
+            item['Last_3'] = Last_3
+            item['Last_1'] = Last_1
+            item['Home'] = Home
+            item['Away'] = Away
+            item['Year_2014'] = Year_2014
 
             yield item

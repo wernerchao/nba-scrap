@@ -8,7 +8,7 @@
 from scrapy import Item, Field
 
 
-class DemoItem(scrapy.Item):
+class NBA_Item(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     Rank = Field()
