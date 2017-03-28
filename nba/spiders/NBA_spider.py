@@ -15,14 +15,14 @@ class NBA_Spider(Spider):
         rows = response.xpath('//*[@id="html"]/body/div[2]/div[1]/div[2]/main/table/tbody/tr').extract()
 
         for row in rows:
-            Rank = Selector(text=row).xpath('//td[1]/text()')[0].extract()
-            Team = Selector(text=row).xpath('//td[2]/a/text()')[0].extract()
-            Year_2015 = Selector(text=row).xpath('//td[3]/text()')[0].extract()
-            Last_3 = Selector(text=row).xpath('//td[4]/text()')[0].extract()
-            Last_1 = Selector(text=row).xpath('//td[5]/text()')[0].extract()
-            Home = Selector(text=row).xpath('//td[6]/text()')[0].extract()
-            Away = Selector(text=row).xpath('//td[7]/text()')[0].extract()
-            Year_2014 = Selector(text=row).xpath('//td[8]/text()')[0].extract()
+            Rank = Selector(text=row).xpath('//td[1]/text()').extract()
+            Team = Selector(text=row).xpath('//td[2]/a/text()').extract()
+            Year_2015 = Selector(text=row).xpath('//td[3]/text()').extract()
+            Last_3 = Selector(text=row).xpath('//td[4]/text()').extract()
+            Last_1 = Selector(text=row).xpath('//td[5]/text()').extract()
+            Home = Selector(text=row).xpath('//td[6]/text()').extract()
+            Away = Selector(text=row).xpath('//td[7]/text()').extract()
+            Year_2014 = Selector(text=row).xpath('//td[8]/text()').extract()
 
             item = NBA_Item()
             item['Rank'] = Rank
