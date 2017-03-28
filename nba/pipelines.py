@@ -19,11 +19,11 @@ class NBA_Pipeline(object):
     def process_item(self, item, spider):
         line = str(item['Rank'][0]) + '\t' + \
                str(item['Team'][0]) + '\t' + \
-               str(item['Year_2015'][0]) + '\t' + \
+               str(item['Current_Yr_Off'][0]) + '\t' + \
                str(item['Last_3'][0]) + '\t' + \
                str(item['Last_1'][0]) + '\t' + \
                str(item['Home'][0]) + '\t' + \
                str(item['Away'][0]) + '\t' + \
-               str(item['Year_2014'][0]) + '\n'
+               str(item['Last_Yr_Off'][0]) + '\n'
         self.file.write(line)
         return item
