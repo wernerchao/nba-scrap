@@ -4,6 +4,9 @@
 #
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8') # Need to set default to utf-8, otherwise ascii codec will give error.
 
 
 class NBA_Pipeline(object):
@@ -34,7 +37,6 @@ class NBA_Pipeline(object):
                str(item['BS'][0]) + '\t' + \
                str(item['BA'][0]) + '\t' + \
                str(item['PTS'][0]) + '\n'
-
         self.file.write(line)
         return item
 

@@ -6,16 +6,20 @@ from scrapy import Request
 from scrapy import Spider
 from scrapy.selector import Selector
 from nba_gamelog.items import NBA_Item
+import re
 
 class NBA_Spider(Spider):
     name = 'NBA_Spider'
     allowed_urls = ['www.nba.com']
     start_urls = ['http://www.nba.com/gameline/20160226/']
 
-    def parse(self, response): 
-        for href in response.css("a.recapAnc::attr('href')")[0:1]:
+    def parse(self, response):
+        for href in response.css("a.recapAnc::attr('href')"): # [0:1] only getting the first link
             url = response.urljoin(href.extract())
-            yield Request(url, callback = self.parse_item) 
+            game_id = re.search('games/(.+?)/gameinfo', url).group(1).replace('/', '_')
+            request = Request(url, callback = self.parse_item)
+            request.meta['game_id'] = game_id
+            yield request
         # for period in range(1,15): 
         #     url = self.lineup_pattern % (self.date, self.date, period, self.season) 
         #     yield Request(url, callback=self.parse_lineups)
@@ -23,6 +27,7 @@ class NBA_Spider(Spider):
 
     def parse_item(self, response):
         rows = response.xpath('//*[@id="nbaGITeamStats"]/tr').extract()
+        print 'Game ID: ', response.meta['game_id']
 
         for row in rows:
             player = Selector(text=row).xpath('//td[1]/a/text()').extract()
@@ -35,7 +40,10 @@ class NBA_Spider(Spider):
             OFF = Selector(text=row).xpath('//td[8]/text()').extract()
             DEF = Selector(text=row).xpath('//td[9]/text()').extract()
             TOT = Selector(text=row).xpath('//td[10]/text()').extract()
+
             AST = Selector(text=row).xpath('//td[11]/text()').extract()
+            # //*[@id="nbaGITeamStats"]/tbody/tr[3]/td[11]
+
             PF = Selector(text=row).xpath('//td[12]/text()').extract()
             ST = Selector(text=row).xpath('//td[13]/text()').extract()
             TO = Selector(text=row).xpath('//td[14]/text()').extract()
@@ -62,41 +70,9 @@ class NBA_Spider(Spider):
             item['BA'] = BA
             item['PTS'] = PTS
 
-            player_2 = Selector(text=row).xpath('//td[1]/a/text()').extract()
-            pos_2 = Selector(text=row).xpath('//td[2]/text()').extract()
-            _min_2 = Selector(text=row).xpath('//td[3]/text()').extract()
-            FGM_A_2 = Selector(text=row).xpath('//td[4]/text()').extract()
-            _3PM_A_2 = Selector(text=row).xpath('//td[5]/text()').extract()
-            FTM_A_2 = Selector(text=row).xpath('//td[6]/text()').extract()
-            plus_minus_2 = Selector(text=row).xpath('//td[7]/text()').extract()
-            OFF_2 = Selector(text=row).xpath('//td[8]/text()').extract()
-            DEF_2 = Selector(text=row).xpath('//td[9]/text()').extract()
-            TOT_2 = Selector(text=row).xpath('//td[10]/text()').extract()
-            AST_2 = Selector(text=row).xpath('//td[11]/text()').extract()
-            PF_2 = Selector(text=row).xpath('//td[12]/text()').extract()
-            ST_2 = Selector(text=row).xpath('//td[13]/text()').extract()
-            TO_2 = Selector(text=row).xpath('//td[14]/text()').extract()
-            BS_2 = Selector(text=row).xpath('//td[15]/text()').extract()
-            BA_2 = Selector(text=row).xpath('//td[16]/text()').extract()
-            PTS_2 = Selector(text=row).xpath('//td[17]/text()').extract()
+            if not item['player'] and item['pos'] == [u'\xa0']:
+                item['player'] = [response.meta['game_id']]
 
-            item['player_2'] = player_2
-            item['pos_2'] = pos_2
-            item['_min_2'] = _min_2
-            item['FGM_A_2'] = FGM_A_2
-            item['_3PM_A_2'] = _3PM_A_2
-            item['FTM_A_2'] = FTM_A_2
-            item['plus_minus_2'] = plus_minus_2
-            item['OFF_2'] = OFF_2
-            item['DEF_2'] = DEF_2
-            item['TOT_2'] = TOT_2
-            item['AST_2'] = AST_2
-            item['PF_2'] = PF_2
-            item['ST_2'] = ST_2
-            item['TO_2'] = TO_2
-            item['BS_2'] = BS_2
-            item['BA_2'] = BA_2
-            item['PTS_2'] = PTS_2
             yield item
 
 
