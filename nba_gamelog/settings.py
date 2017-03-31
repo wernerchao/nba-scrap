@@ -9,12 +9,12 @@
 #     http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 #     http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'nba'
+BOT_NAME = 'nba_gamelog'
 
-SPIDER_MODULES = ['nba.spiders']
-NEWSPIDER_MODULE = 'nba.spiders'
+SPIDER_MODULES = ['nba_gamelog.spiders']
+NEWSPIDER_MODULE = 'nba_gamelog.spiders'
 
 DOWNLOAD_DELAY = 3
 ITEM_PIPELINES = {
-   'nba.pipelines.NBA_Pipeline': 100,
+   'nba_gamelog.pipelines.NBA_Pipeline': 100,
 }
