@@ -11,7 +11,7 @@ import re
 class NBA_Spider(Spider):
     name = 'NBA_Spider'
     allowed_urls = ['www.nba.com']
-    start_urls = ['http://www.nba.com/gameline/20160226/']
+    start_urls = ['http://www.nba.com/gameline/20160230/']
 
     def parse(self, response):
         for href in response.css("a.recapAnc::attr('href')"): # [0:1] only getting the first link
